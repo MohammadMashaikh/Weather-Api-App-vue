@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 
 const cards = ref([])
@@ -122,6 +122,55 @@ const selectedDay = ref(null)
   }
 
 
+  const snowCanvas = ref(null)
+
+  onMounted(() => {
+    const canvas = snowCanvas.value
+    const ctx = canvas.getContext('2d')
+
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+
+    const flakes = Array.from({ length: 150 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 3 + 1,
+      d: Math.random() + 1
+    }))
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ctx.fillStyle = 'rgba(255,255,255,0.8)'
+      ctx.beginPath()
+
+      flakes.forEach(f => {
+        ctx.moveTo(f.x, f.y)
+        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2)
+      })
+
+      ctx.fill()
+      move()
+    }
+
+    function move() {
+      flakes.forEach(f => {
+        f.y += Math.pow(f.d, 2)
+        if (f.y > canvas.height) {
+          f.y = 0
+          f.x = Math.random() * canvas.width
+        }
+      })
+    }
+
+    setInterval(draw, 25)
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+    })
+  })
+
+
 
 </script>
 
@@ -134,6 +183,8 @@ const selectedDay = ref(null)
          bg-[radial-gradient(circle_at_top,_#9f7aea,_#4338ca_60%,_#312e81)]
          px-6 py-10"
 >
+
+<canvas ref="snowCanvas" class="snow-canvas"></canvas>
 
   
     <!-- App Container -->
@@ -305,3 +356,16 @@ const selectedDay = ref(null)
     </div>
   </div>
 </template>
+
+
+<style scoped>
+
+
+.snow-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+</style>
