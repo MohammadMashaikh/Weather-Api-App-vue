@@ -75,8 +75,8 @@ src/
 ### 1️⃣ Clone the repository
 
 ```bash
-git clone https://github.com/your-username/weather-app-vue.git
-cd weather-app-vue
+git clone https://github.com/MohammadMashaikh/weather-api-app-vue.git
+cd weather-api-app-vue
 ```
 
 ---
