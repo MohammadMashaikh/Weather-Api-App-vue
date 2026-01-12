@@ -63,12 +63,6 @@ This project uses the **OpenWeatherMap API**:
 
 ```bash
 src/
-├── components/
-│   ├── SearchBar.vue
-│   ├── WeatherHeader.vue
-│   ├── HourlyForecast.vue
-│   ├── DailyForecast.vue
-│   └── WeatherCards.vue
 ├── App.vue
 ├── main.js
 └── assets/
